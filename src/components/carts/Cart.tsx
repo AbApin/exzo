@@ -5,6 +5,7 @@ import {
   type CartType,
 } from '../../pages/products/productsSlice';
 import { useAppDispatch } from '../../hooks';
+import cartRemove from '../../assets/img/cartRemove.png';
 
 type Props = {
   cart: CartType;
@@ -76,7 +77,7 @@ function Cart({ cart }: Props) {
     before:duration-500
     hover:before:transition-opacity
     hover:before:duration-500">
-          <img src="../../../src/assets/img/cartRemove.png" className="block" alt="delete" />
+          <img src={cartRemove} className="block" alt="delete" />
         </button>
       </div>
     </div>

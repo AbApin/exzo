@@ -2,6 +2,7 @@ import { changeShowVersion, setCurrentLimit } from '../../pages/products/product
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useGetTotalProductsByCategoryQuery } from '../../features/products/productsApi';
 
+
 export default function Filters() {
   const limit = useAppSelector((state) => state.products.limit);
   const showVersion = useAppSelector((state) => state.products.showVersion);

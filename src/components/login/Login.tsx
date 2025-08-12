@@ -5,6 +5,7 @@ import Form from './Form';
 import { useAppDispatch } from '../../hooks';
 import { setUser } from '../../features/user/userSlice';
 import type { FirebaseError } from 'firebase/app';
+import closeImg from '../../assets/img/close.png';
 
 const Login = ({ onClose }: { onClose: () => void }) => {
   const location = useLocation();
@@ -69,7 +70,7 @@ const Login = ({ onClose }: { onClose: () => void }) => {
           type="button"
           onClick={onClose}
           className="flex items-center justify-center bg-transparent absolute right-[20px] top-[20px] w-[30px] h-[30px] border-0 cursor-pointer">
-          <img src="../../../src/assets/img/close.png" className="block max-w-full" alt="close" />
+          <img src={closeImg} className="block max-w-full" alt="close" />
         </button>
         <button
           type="button"
