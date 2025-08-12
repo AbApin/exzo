@@ -42,14 +42,14 @@ export type CategoryType = {
 export const fetchAllFavoriteProducts = createAsyncThunk<FavouriteProductType[]>(
   'products/fetchAllFavoriteProducts',
   async () => {
-    const res = await fetch(`http://localhost:5000/favourites`);
+    const res = await fetch(`https://exzo.vercel.app/favourites`);
     const data = await res.json();
     return data;
   },
 );
 
 export const fetchAllCartProducts = createAsyncThunk<CartType[]>('products/fetchAllCartProducts', async () => {
-  const res = await fetch(`http://localhost:5000/carts`);
+  const res = await fetch(`https://exzo.vercel.app/carts`);
   const data = await res.json();
   return data;
 });
@@ -58,7 +58,7 @@ export const fetchAllCartProducts = createAsyncThunk<CartType[]>('products/fetch
 export const addFavourite = createAsyncThunk<FavouriteProductType, { product: ProductType }>(
   'products/addFavourite',
   async ({ product }: { product: ProductType }, { dispatch }) => {
-    const response = await fetch(`http://localhost:5000/favourites/`, {
+    const response = await fetch(`https://exzo.vercel.app/favourites/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(product), // ✅ just product, not { product }
@@ -76,7 +76,7 @@ export const addFavourite = createAsyncThunk<FavouriteProductType, { product: Pr
 export const removeFavourite = createAsyncThunk<string, { id: string }>(
   'products/removeFavourite',
   async ({ id }, { dispatch }) => {
-    const response = await fetch(`http://localhost:5000/favourites/${id}`, {
+    const response = await fetch(`https://exzo.vercel.app/favourites/${id}`, {
       method: 'DELETE',
     });
 
@@ -101,13 +101,13 @@ export const addToCart = createAsyncThunk<CartType, { product: ProductType }>(
 
     if (existingItem) {
       // ✅ Use existingItem.id instead of product.id
-      response = await fetch(`http://localhost:5000/carts/${existingItem.id}`, {
+      response = await fetch(`https://exzo.vercel.app/carts/${existingItem.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ count: existingItem.count + 1 }),
       });
     } else {
-      response = await fetch(`http://localhost:5000/carts/`, {
+      response = await fetch(`https://exzo.vercel.app/carts/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...product, count: 1 }),
@@ -124,7 +124,7 @@ export const addToCart = createAsyncThunk<CartType, { product: ProductType }>(
   },
 );
 export const removeCart = createAsyncThunk<string, { id: string }>('products/removeCart', async ({ id }, { dispatch }) => {
-  const response = await fetch(`http://localhost:5000/carts/${id}`, {
+  const response = await fetch(`https://exzo.vercel.app/carts/${id}`, {
     method: 'DELETE',
   }).finally(() => dispatch(fetchAllCartProducts()));
 
@@ -140,7 +140,7 @@ export const cartCountMinus = createAsyncThunk<string, { cart: CartType }>(
   async ({ cart }, { dispatch }) => {
     const updateCount = cart.count - 1;
     console.log(updateCount);
-    const response = await fetch(`http://localhost:5000/carts/${cart.id}`, {
+    const response = await fetch(`https://exzo.vercel.app/carts/${cart.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ count: updateCount }),
@@ -158,7 +158,7 @@ export const cartCountPlus = createAsyncThunk<string, { cart: CartType }>(
   'products/cartCountPlus',
   async ({ cart }, { dispatch }) => {
     const updateCount = cart.count + 1;
-    const response = await fetch(`http://localhost:5000/carts/${cart.id}`, {
+    const response = await fetch(`https://exzo.vercel.app/carts/${cart.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ count: updateCount }),
