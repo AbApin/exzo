@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router';
 import { useAuth } from '../../features/user/useAuth';
 import { removeUser } from '../../features/user/userSlice';
 import { getAuth, signOut } from 'firebase/auth';
+import logo from '../../assets/img/logo.png';
 
 const Header = () => {
   const cartsProductsCount = useAppSelector((state) => state.products.cartsProductsCount);
@@ -103,7 +104,7 @@ const Header = () => {
         <div className="max-w-[1395px] mx-auto px-5 2xl:px-0">
           <div className="flex items-center justify-between">
             <Link to="/" className="headerLogo">
-              <img className="block max-w-full" src="../../../src/assets/img/logo.png" alt="" />
+              <img className="block max-w-full" src={logo} alt="Logo" />
             </Link>
             <nav className="flex items-center gap-5">
               <NavLink

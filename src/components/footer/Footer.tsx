@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router';
+import footerLogo from '../../assets/img/footerLogo.png';
 
 function Footer() {
   return (
@@ -6,7 +7,7 @@ function Footer() {
       <div className="max-w-[1355px] mx-auto px-[20px] 2xl:px-0">
         <div className="flex items-center justify-between">
           <Link to={'/'} className="footerLogo">
-            <img src="../../../src/assets/img/footerLogo.png" alt="" />
+            <img src={footerLogo} alt="Logo" />
           </Link>
           <nav className="flex items-center gap-[30px]">
             <NavLink
