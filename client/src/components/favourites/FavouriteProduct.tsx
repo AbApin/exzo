@@ -6,6 +6,7 @@ import {
   type ProductType,
 } from '../../pages/products/productsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useState } from 'react';
 
 function FavouriteProduct({ product }: { product: ProductType }) {
   const { id, title, category, price, thumbnail, discountPercentage } = product;
@@ -13,6 +14,7 @@ function FavouriteProduct({ product }: { product: ProductType }) {
   const favourites = useAppSelector((state) => state.products.favourites);
   const dispatch = useAppDispatch();
   const haveInFavourites = favourites.some((fav) => fav.id === id);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const handleClickFavouriteIcon = (productId: string) => {
     if (!haveInFavourites && product && product.id) {
@@ -23,7 +25,7 @@ function FavouriteProduct({ product }: { product: ProductType }) {
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group" onClick={() => setShowOverlay(!showOverlay)}>
       <div className="font-[raleway] uppercase leading-[18px]">
         <p className="text-[#b8cd06] text-[11px]">{category}</p>
         <Link to={`/products/${id}`} className="text-[#343434] text-[13px] font-bold">
@@ -32,7 +34,10 @@ function FavouriteProduct({ product }: { product: ProductType }) {
       </div>
       <div className="w-[200px] h-[200px] mt-[10px] relative">
         <img src={thumbnail} className="block w-full max-w-full m-auto" alt={title} />
-        <div className="hidden group-hover:flex absolute top-0 left-0 w-full h-full items-center justify-center bg-[rgba(255,255,255,0.9)] animate-fadeIn transition-all duration-300">
+        <div
+          className={`absolute top-0 left-0 w-full h-full items-center justify-center bg-[rgba(255,255,255,0.9)] transition-all duration-300 ${
+            showOverlay ? 'flex' : 'hidden'
+          } group-hover:flex`}>
           <div className="flex flex-col gap-[10px]">
             <Link
               to={`/products/${id}`}
