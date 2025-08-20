@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { CategoryType, ProductType } from '../../pages/products/productsSlice';
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 export const productsApi = createApi({
     reducerPath: 'productsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: (builder) => ({
         getAllProducts: builder.query<ProductType[], { category: string; limit: number }>({
             query: ({ category, limit }) =>

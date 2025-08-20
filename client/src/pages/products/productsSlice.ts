@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
+import { BASE_URL } from '../../features/products/productsApi';
 
 export type ProductType = {
   id: string,
@@ -42,14 +43,14 @@ export type CategoryType = {
 export const fetchAllFavoriteProducts = createAsyncThunk<FavouriteProductType[]>(
   'products/fetchAllFavoriteProducts',
   async () => {
-    const res = await fetch(`${process.env.BASE_URL}favourites`);
+    const res = await fetch(`${BASE_URL}favourites`);
     const data = await res.json();
     return data;
   },
 );
 
 export const fetchAllCartProducts = createAsyncThunk<CartType[]>('products/fetchAllCartProducts', async () => {
-  const res = await fetch(`${process.env.BASE_URL}carts`);
+  const res = await fetch(`${BASE_URL}carts`);
   const data = await res.json();
   return data;
 });
@@ -58,10 +59,12 @@ export const fetchAllCartProducts = createAsyncThunk<CartType[]>('products/fetch
 export const addFavourite = createAsyncThunk<FavouriteProductType, { product: ProductType }>(
   'products/addFavourite',
   async ({ product }: { product: ProductType }, { dispatch }) => {
-    const response = await fetch(`favourites/`, {
+
+
+    const response = await fetch(`${BASE_URL}favourites/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(product), // ✅ just product, not { product }
+      body: JSON.stringify(product), // ✅ just product
     });
 
     dispatch(fetchAllFavoriteProducts())
@@ -76,7 +79,7 @@ export const addFavourite = createAsyncThunk<FavouriteProductType, { product: Pr
 export const removeFavourite = createAsyncThunk<string, { id: string }>(
   'products/removeFavourite',
   async ({ id }, { dispatch }) => {
-    const response = await fetch(`${process.env.BASE_URL}favourites/${id}`, {
+    const response = await fetch(`${BASE_URL}favourites/${id}`, {
       method: 'DELETE',
     });
 
@@ -101,13 +104,13 @@ export const addToCart = createAsyncThunk<CartType, { product: ProductType }>(
 
     if (existingItem) {
       // ✅ Use existingItem.id instead of product.id
-      response = await fetch(`${process.env.BASE_URL}carts/${existingItem.id}`, {
+      response = await fetch(`${BASE_URL}carts/${existingItem.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ count: existingItem.count + 1 }),
       });
     } else {
-      response = await fetch(`${process.env.BASE_URL}carts/`, {
+      response = await fetch(`${BASE_URL}carts/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...product, count: 1 }),
@@ -124,7 +127,7 @@ export const addToCart = createAsyncThunk<CartType, { product: ProductType }>(
   },
 );
 export const removeCart = createAsyncThunk<string, { id: string }>('products/removeCart', async ({ id }, { dispatch }) => {
-  const response = await fetch(`${process.env.BASE_URL}carts/${id}`, {
+  const response = await fetch(`${BASE_URL}carts/${id}`, {
     method: 'DELETE',
   }).finally(() => dispatch(fetchAllCartProducts()));
 
@@ -140,7 +143,7 @@ export const cartCountMinus = createAsyncThunk<string, { cart: CartType }>(
   async ({ cart }, { dispatch }) => {
     const updateCount = cart.count - 1;
     console.log(updateCount);
-    const response = await fetch(`${process.env.BASE_URL}carts/${cart.id}`, {
+    const response = await fetch(`${BASE_URL}carts/${cart.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ count: updateCount }),
@@ -158,7 +161,7 @@ export const cartCountPlus = createAsyncThunk<string, { cart: CartType }>(
   'products/cartCountPlus',
   async ({ cart }, { dispatch }) => {
     const updateCount = cart.count + 1;
-    const response = await fetch(`${process.env.BASE_URL}carts/${cart.id}`, {
+    const response = await fetch(`${BASE_URL}carts/${cart.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ count: updateCount }),

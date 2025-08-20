@@ -1,7 +1,6 @@
 import Categories from '../../components/categories/Categories';
 import Filters from '../../components/filters/Filters';
 import ProductList from '../../components/products/ProductList';
-// import './products.css';
 
 function Products() {
   return (
