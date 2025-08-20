@@ -58,7 +58,7 @@ export const fetchAllCartProducts = createAsyncThunk<CartType[]>('products/fetch
 export const addFavourite = createAsyncThunk<FavouriteProductType, { product: ProductType }>(
   'products/addFavourite',
   async ({ product }: { product: ProductType }, { dispatch }) => {
-    const response = await fetch(`favourites/`, {
+    const response = await fetch(`${process.env.BASE_URL}favourites/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(product), // ✅ just product, not { product }
@@ -72,7 +72,7 @@ export const addFavourite = createAsyncThunk<FavouriteProductType, { product: Pr
     return await response.json();
   },
 );
-
+process.e
 export const removeFavourite = createAsyncThunk<string, { id: string }>(
   'products/removeFavourite',
   async ({ id }, { dispatch }) => {
